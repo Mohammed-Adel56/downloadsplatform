@@ -44,6 +44,7 @@ function HeroSection() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Accept: "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
@@ -74,8 +75,11 @@ function HeroSection() {
       const response = await fetch(
         `https://downloadsplatform.com/api/urls/${userData.id}`,
         {
+          withCredentials: true,
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+            Accept: "application/json",
           },
         }
       );

@@ -225,7 +225,7 @@ function App() {
     // Record session end when user leaves
     const recordSession = async () => {
       try {
-        await axios.post("http://localhost:5000/api/session", {
+        await axios.post("https://downloadsplatform.com/api/session", {
           start_time: sessionStartRef.current.toISOString(),
           end_time: new Date().toISOString(),
           is_authenticated: isAuthenticated,
@@ -235,7 +235,7 @@ function App() {
         recordedRef.current = true;
       } catch (error) {
         // console.error("Error recording session:", error);
-        
+
         toast.error("فشل في تسجيل الحصة");
       }
     };
@@ -257,7 +257,7 @@ function App() {
         { type: "application/json" }
       );
 
-      navigator.sendBeacon("http://localhost:5000/api/session", data);
+      navigator.sendBeacon("https://downloadsplatform.com/api/session", data);
       // console.log(data);
       recordedRef.current = true;
     };
