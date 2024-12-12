@@ -274,7 +274,7 @@ function App() {
       <PayPalScriptProvider
         options={{
           "client-id":
-            "AT7-WMO3p5uFo_78BiRcWbM0yI1dn6WmQmA-2obmZyAit9kAi_Cu5834oN-MAqlv6NVZGpSkh3IJH551",
+            "AWhFr5kforsVbjZkOHm-0nV-sK8auN-KAdJqEdlBgnMIJ1t_6Ox-5blDBhPuYi-8vB5oTv0Ds9AGzknc",
           vault: "true",
           intent: "capture",
         }}

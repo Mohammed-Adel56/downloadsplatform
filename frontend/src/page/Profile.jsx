@@ -28,9 +28,13 @@ const Profile = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          "http://localhost:5000/api/auth/check-auth",
+          "https://downloadsplatform.com/api/auth/check-auth",
           {
             withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
           }
         );
         if (response.data.authenticated) {
@@ -72,12 +76,13 @@ const Profile = () => {
       setError(null);
 
       const response = await axios.post(
-        "http://localhost:5000/api/auth/updateUserDetails",
+        "https://downloadsplatform.com/api/auth/updateUserDetails",
         formData,
         {
           withCredentials: true,
           headers: {
             "Content-Type": "application/json",
+            Accept: "application/json",
           },
         }
       );

@@ -6,7 +6,7 @@ function Features() {
   const fetchFeatures = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/content?type=feature"
+        "https://downloadsplatform.com/api/content?type=feature"
       );
       const data = await response.json();
       setFeatures(data.content);

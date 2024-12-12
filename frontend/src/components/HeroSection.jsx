@@ -40,7 +40,7 @@ function HeroSection() {
   const handleAddUrl = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/urls", {
+      const response = await fetch("https://downloadsplatform.com/api/urls", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +72,7 @@ function HeroSection() {
       // console.log("*******************************");
       // console.log(userData);
       const response = await fetch(
-        `http://localhost:5000/api/urls/${userData.id}`,
+        `https://downloadsplatform.com/api/urls/${userData.id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -124,7 +124,7 @@ function HeroSection() {
     setVideoInfo(null);
 
     try {
-      const response = await fetch("http://localhost:5000/api/info", {
+      const response = await fetch("https://downloadsplatform.com/api/info", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -155,7 +155,7 @@ function HeroSection() {
       const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
       const response = await fetch(
-        `http://localhost:5000/api/download?url=${encodeURIComponent(
+        `https://downloadsplatform.com/api/download?url=${encodeURIComponent(
           url
         )}&format_id=${formatId}`,
         {
@@ -230,7 +230,7 @@ function HeroSection() {
 
       setLoading(true);
       const response = await fetch(
-        `http://localhost:5000/api/download-thumbnail?url=${encodeURIComponent(
+        `https://downloadsplatform.com/api/download-thumbnail?url=${encodeURIComponent(
           videoInfo.thumbnail
         )}`
       );
@@ -259,7 +259,7 @@ function HeroSection() {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:5000/api/proxy-media?url=${encodeURIComponent(
+        `https://downloadsplatform.com/api/proxy-media?url=${encodeURIComponent(
           mediaUrl
         )}`
       );
@@ -321,7 +321,7 @@ function HeroSection() {
               {" "}
               {/* Added aspect ratio container */}
               <img
-                src={`http://localhost:5000/api/proxy-media?url=${encodeURIComponent(
+                src={`https://downloadsplatform.com/api/proxy-media?url=${encodeURIComponent(
                   item.thumbnail || item.url
                 )}`}
                 alt={`Media ${index + 1}`}
@@ -353,7 +353,7 @@ function HeroSection() {
         {videoInfo.thumbnail && (
           <div className="relative w-64 mx-auto mb-4">
             <img
-              src={`http://localhost:5000/api/proxy-media?url=${encodeURIComponent(
+              src={`https://downloadsplatform.com/api/proxy-media?url=${encodeURIComponent(
                 videoInfo.thumbnail
               )}`}
               alt="thumbnail"

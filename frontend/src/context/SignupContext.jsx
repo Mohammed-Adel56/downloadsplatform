@@ -8,7 +8,7 @@ const getCookie = () => {
   try {
     // Create axios instance for checking auth
     const instance = axios.create({
-      baseURL: "http://localhost:5000",
+      baseURL: "https://downloadsplatform.com",
       withCredentials: true,
       headers: {
         Accept: "application/json",
@@ -83,7 +83,7 @@ export const SignupProvider = ({ children }) => {
   const resendOTP = async (email, type = "verification") => {
     try {
       const response = await axios.post(
-        "http://127.0.0.1:5000/api/auth/resend-otp",
+        "https://downloadsplatform.com/api/auth/resend-otp",
         {
           email,
           type,
@@ -144,13 +144,17 @@ export const SignupProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://downloadsplatform.com/api/auth/login",
         {
           email,
           password,
         },
         {
           withCredentials: true, // Important for cookies
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
         }
       );
 

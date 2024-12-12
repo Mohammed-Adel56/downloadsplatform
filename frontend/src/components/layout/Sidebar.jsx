@@ -40,10 +40,14 @@ const Sidebar = ({ open, setOpen }) => {
   const handleLogout = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/logout",
+        "https://downloadsplatform.com/api/auth/logout",
         {},
         {
           withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
         }
       );
       // console.log(res.data);

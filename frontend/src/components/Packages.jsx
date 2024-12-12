@@ -14,7 +14,7 @@ const Packages = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/services");
+      const response = await axios.get("https://downloadsplatform.com/api/services");
       setServices(response.data.services); // Set services state
       // console.log(services);
     } catch (error) {

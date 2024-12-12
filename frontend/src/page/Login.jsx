@@ -54,7 +54,7 @@ const Login = () => {
       const user = result.user;
       // console.log(user);
       const axiosInstance = axios.create({
-        baseURL: "http://127.0.0.1:5000",
+        baseURL: "https://downloadsplatform.com",
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
@@ -130,13 +130,19 @@ const Login = () => {
         // console.log("********************");
         try {
           const response = await axios.post(
-            "http://localhost:5000/api/auth/login",
+            "https://downloadsplatform.com/api/auth/login",
             {
               email: emailAdmin,
               password: passwordAdmin,
               isAdmin: true, // Hardcoded to true for admin registration
             },
-            { withCredentials: true }
+            {
+              withCredentials: true,
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+            }
           );
           if (response.data.success) {
             setIsAdmin(true);

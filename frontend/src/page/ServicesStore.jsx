@@ -37,12 +37,14 @@ const ServicesStore = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/services");
+      const response = await axios.get(
+        "https://downloadsplatform.com/api/services"
+      );
       setServices(response.data.services);
       // console.log(services);
     } catch (error) {
       // console.error("Error fetching services:", error);
-      toast.error("فشل في تحميل الخدمات")
+      toast.error("فشل في تحميل الخدمات");
     }
   };
 
@@ -54,8 +56,15 @@ const ServicesStore = () => {
         const formData = new FormData();
         formData.append("file", image);
         const uploadResponse = await axios.post(
-          "http://localhost:5000/api/upload-image",
-          formData
+          "https://downloadsplatform.com/api/upload-image",
+          formData,
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
         );
         imageUrl = uploadResponse.data.url; // Get the uploaded image URL
       }
@@ -65,12 +74,29 @@ const ServicesStore = () => {
       if (isEditing) {
         // console.log(formData);
         await axios.put(
-          `http://localhost:5000/api/services/${editingId}`,
-          serviceData
+          `https://downloadsplatform.com/api/services/${editingId}`,
+          serviceData,
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
         );
       } else {
         // console.log(formData);
-        await axios.post("http://localhost:5000/api/services", serviceData);
+        await axios.post(
+          "https://downloadsplatform.com/api/services",
+          serviceData,
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
+        );
       }
       fetchServices();
       resetForm();
@@ -83,11 +109,11 @@ const ServicesStore = () => {
   const handleDelete = async (id) => {
     if (window.confirm("هل أنت متأكد من حذف هذه الخدمة؟")) {
       try {
-        await axios.delete(`http://localhost:5000/api/services/${id}`);
+        await axios.delete(`https://downloadsplatform.com/api/services/${id}`);
         fetchServices();
       } catch (error) {
         // console.error("Error deleting service:", error);
-        toast.error("فشل في حذف الخدمه")
+        toast.error("فشل في حذف الخدمه");
       }
     }
   };

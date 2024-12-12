@@ -66,7 +66,7 @@ const EditAdModal = ({ isOpen, onClose, ad, onUpdate }) => {
     }
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/advertisements/${ad.id}`,
+        `https://downloadsplatform.com/api/advertisements/${ad.id}`,
         formData,
         {
           headers: {

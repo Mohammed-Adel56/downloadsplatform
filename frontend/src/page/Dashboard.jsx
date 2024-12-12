@@ -54,10 +54,39 @@ const Dashboard = () => {
         websiteStatsResponse,
         completedProfilesResponse,
       ] = await Promise.all([
-        axios.get("http://localhost:5000/api/analytics"),
-        axios.get("http://localhost:5000/api/stats/downloads"),
-        axios.get("http://localhost:5000/api/stats/downloads-by-website"),
-        axios.get("http://localhost:5000/api/completed-profiles"), // Fetch completed profiles
+        axios.get("https://downloadsplatform.com/api/analytics", {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }),
+        axios.get("https://downloadsplatform.com/api/stats/downloads", {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }),
+        axios.get(
+          "https://downloadsplatform.com/api/stats/downloads-by-website",
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
+        ),
+        axios.get("https://downloadsplatform.com/api/completed-profiles",
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
+        ), // Fetch completed profiles
       ]);
 
       setAnalytics({

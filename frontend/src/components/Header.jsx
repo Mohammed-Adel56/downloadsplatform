@@ -26,8 +26,11 @@ function Header() {
   const fetchNotifications = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/user/notifications",
-        { withCredentials: true }
+        "https://downloadsplatform.com/api/user/notifications",
+        { withCredentials: true, headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        } }
       );
       setNotifications(response.data.notifications);
       setUnreadCount(
@@ -43,9 +46,15 @@ function Header() {
   const markAsRead = async (notificationId) => {
     try {
       await axios.post(
-        `http://localhost:5000/api/user/notifications/${notificationId}/read`,
+        `https://downloadsplatform.com/api/user/notifications/${notificationId}/read`,
         {},
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
       );
       fetchNotifications(); // Refresh notifications
     } catch (error) {

@@ -29,9 +29,13 @@ const Subscriptions = () => {
   const fetchSubscriptions = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/subscriptions",
+        "https://downloadsplatform.com/api/subscriptions",
         {
           withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
         }
       );
       setSubscriptions(response.data.subscriptions);
@@ -84,15 +88,29 @@ const Subscriptions = () => {
 
       if (editMode) {
         await axios.put(
-          `http://localhost:5000/api/subscriptions/${editId}`,
+          `https://downloadsplatform.com/api/subscriptions/${editId}`,
           data,
-          { withCredentials: true }
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
         );
         toast.success("تم تحديث الاشتراك بنجاح");
       } else {
-        await axios.post("http://localhost:5000/api/subscriptions", data, {
-          withCredentials: true,
-        });
+        await axios.post(
+          "https://downloadsplatform.com/api/subscriptions",
+          data,
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
+        );
         toast.success("تم إضافة الاشتراك بنجاح");
       }
 
@@ -126,9 +144,16 @@ const Subscriptions = () => {
     if (!window.confirm("هل أنت متأكد من حذف هذا الاشتراك؟")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/subscriptions/${id}`, {
-        withCredentials: true,
-      });
+      await axios.delete(
+        `https://downloadsplatform.com/api/subscriptions/${id}`,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      );
       toast.success("تم حذف الاشتراك بنجاح");
       fetchSubscriptions();
     } catch (error) {

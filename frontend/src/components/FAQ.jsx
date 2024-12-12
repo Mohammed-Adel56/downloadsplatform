@@ -8,7 +8,7 @@ function FAQ() {
   const fetchFAQs = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/content?type=faq"
+        "https://downloadsplatform.com/api/content?type=faq"
       );
       const data = await response.json();
       setFaqs(data.content);

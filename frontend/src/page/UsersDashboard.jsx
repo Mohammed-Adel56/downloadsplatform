@@ -41,13 +41,15 @@ const AdsManagement = () => {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:5000/api/users");
+      const response = await axios.get(
+        "https://downloadsplatform.com/api/users"
+      );
       setUsers(response.data.users);
       setError(null);
     } catch (err) {
       setError("Failed to fetch users");
       // console.error("Error fetching users:", err);
-      toast.error("فشل في تحميل المستخدمين")
+      toast.error("فشل في تحميل المستخدمين");
     } finally {
       setLoading(false);
     }
@@ -55,7 +57,14 @@ const AdsManagement = () => {
   const fetchUserAds = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/advertisements"
+        "https://downloadsplatform.com/api/advertisements",
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
       );
       setUserAds(response.data.advertisements);
     } catch (err) {
@@ -67,7 +76,7 @@ const AdsManagement = () => {
   const handleDeleteUser = async (userId) => {
     if (window.confirm("هل أنت متأكد من حذف هذا المستخدم؟")) {
       try {
-        await axios.delete(`http://localhost:5000/api/users/${userId}`);
+        await axios.delete(`https://downloadsplatform.com/api/users/${userId}`);
         setUsers(users.filter((user) => user.id !== userId));
         // alert("تم حذف المستخدم بنجاح");
         toast.success("تم حذف المستخدم بنجاح");
@@ -79,9 +88,19 @@ const AdsManagement = () => {
   };
   const handleUpdateUserStatus = async (userId, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/users/${userId}`, {
-        status: newStatus,
-      });
+      await axios.put(
+        `https://downloadsplatform.com/api/users/${userId}`,
+        {
+          status: newStatus,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      );
       setUsers(
         users.map((user) =>
           user.id === userId ? { ...user, status: newStatus } : user

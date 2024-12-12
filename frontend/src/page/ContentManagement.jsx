@@ -15,7 +15,7 @@ const ContentManagement = () => {
   // Fetch content from the backend
   const fetchContent = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/content");
+      const response = await fetch("https://downloadsplatform.com/api/content");
       if (!response.ok) throw new Error("Failed to fetch content");
       const data = await response.json();
       setContentList(data.content);
@@ -35,12 +35,14 @@ const ContentManagement = () => {
     try {
       const method = isEditing ? "PUT" : "POST";
       const url = isEditing
-        ? `http://localhost:5000/api/content/${editContentId}`
-        : "http://localhost:5000/api/content";
+        ? `https://downloadsplatform.com/api/content/${editContentId}`
+        : "https://downloadsplatform.com/api/content";
       const response = await fetch(url, {
         method,
+        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
+          Accept: "application/json",
         },
         body: JSON.stringify(newContent),
       });
@@ -69,9 +71,12 @@ const ContentManagement = () => {
   // Handle deleting content
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/content/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://downloadsplatform.com/api/content/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (!response.ok) throw new Error("Failed to delete content");
       fetchContent(); // Refresh content list
     } catch (error) {

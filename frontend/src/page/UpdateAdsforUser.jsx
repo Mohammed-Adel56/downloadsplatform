@@ -60,9 +60,10 @@ const UpdateAdsforUser = () => {
       // console.log('Response:', response.data);
       // Handle success (e.g., show a success message)
       const response = await axios.post(
-        "http://127.0.0.1:5000/api/advertisements",
+        "https://downloadsplatform.com/api/advertisements",
         dataToSend,
         {
+          withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
           },

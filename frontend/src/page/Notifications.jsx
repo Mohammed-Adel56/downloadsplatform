@@ -21,7 +21,7 @@ const Notifications = () => {
   const fetchNotifications = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/notifications",
+        "https://downloadsplatform.com/api/notifications",
         {
           withCredentials: true,
         }
@@ -52,7 +52,7 @@ const Notifications = () => {
     try {
       setLoading(true);
       await axios.post(
-        "http://localhost:5000/api/notifications",
+        "https://downloadsplatform.com/api/notifications",
         {
           title: formData.title,
           description: formData.description,
@@ -60,7 +60,13 @@ const Notifications = () => {
           subscriptionTier:
             targetAudience === "المشتركين فقط" ? subscriptionTier : null,
         },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
       );
 
       toast.success("تم إرسال الإشعار بنجاح");
@@ -84,8 +90,12 @@ const Notifications = () => {
     if (!window.confirm("هل أنت متأكد من حذف هذا الإشعار؟")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/notifications/${id}`, {
+      await axios.delete(`https://downloadsplatform.com/api/notifications/${id}`, {
         withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
       });
       toast.success("تم حذف الإشعار بنجاح");
       fetchNotifications();

@@ -14,8 +14,14 @@ const AdsReview = () => {
     // Fetch advertisements from the backend
     const fetchAds = async () => {
       const response = await axios.get(
-        "http://localhost:5000/api/advertisements",
-        { withCredentials: true }
+        "https://downloadsplatform.com/api/advertisements",
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
       );
       // console.log(response);
       setAds(response.data.advertisements);
@@ -26,8 +32,15 @@ const AdsReview = () => {
   const updateAdStatus = async (adId, status) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/advertisements/${adId}/status`,
-        { status }
+        `https://downloadsplatform.com/api/advertisements/${adId}/status`,
+        { status },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
       );
       // Refresh the ads list after updating
       const updatedAds = ads.map((ad) =>
