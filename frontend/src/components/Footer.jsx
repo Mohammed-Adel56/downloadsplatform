@@ -8,24 +8,16 @@ function Footer() {
         <div className="flex flex-col items-center space-y-4">
           <div className="space-y-2">
             <a href="#" className="block">
-              <img src="/public/Mobile1.png" alt="App Store" className="w-32" />
+              <img src="/Mobile1.png" alt="App Store" className="w-32" />
             </a>
             <a href="#" className="block">
-              <img
-                src="/public/Mobile3.png"
-                alt="Google Play"
-                className="w-32"
-              />
+              <img src="/Mobile3.png" alt="Google Play" className="w-32" />
             </a>
             <a href="#" className="block">
-              <img
-                src="/public/Mobile2.png"
-                alt="AppGallery"
-                className="w-32"
-              />
+              <img src="/Mobile2.png" alt="AppGallery" className="w-32" />
             </a>
           </div>
-          <img src="/public/QR_Code.png" alt="QR Code" className="w-20 h-20" />
+          <img src="/QR_Code.png" alt="QR Code" className="w-20 h-20" />
         </div>
 
         {/* Center Section - Contact Info and Button */}

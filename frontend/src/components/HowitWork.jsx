@@ -7,14 +7,14 @@ function HowItWorks() {
       </p>
       <div className="flex md:justify-around  items-center flex-col md:flex-row">
         <div className=" w-72">
-          <img src="/public/4.png" alt="" className="mx-auto my-3 " />
+          <img src="/4.png" alt="" className="mx-auto my-3 " />
           <h3 className="text-xl font-bold my-3">أبداء التحميل</h3>
           <p className="font-sm text-center text-[#6e797a]">
             اضغط علي زر التحميل واحفظ الملف مباشرة أو أرسله إلي التطبيق
           </p>
         </div>
         <div className=" w-72">
-          <img src="/public/3.png" alt="" className="mx-auto my-3 shadow-md" />
+          <img src="/3.png" alt="" className="mx-auto my-3 shadow-md" />
           <h3 className="text-xl font-bold my-3">اختر نوع التحميل</h3>
           <p className="font-sm text-center text-[#6e797a]">
             {" "}
@@ -22,7 +22,7 @@ function HowItWorks() {
           </p>
         </div>
         <div className=" w-72">
-          <img src="/public/2.png" alt="" className="mx-auto my-3 shadow-md" />
+          <img src="/2.png" alt="" className="mx-auto my-3 shadow-md" />
           <h3 className="text-xl font-bold my-3">أدخل الرابط</h3>
           <p className="font-sm text-center text-[#6e797a]">
             {" "}

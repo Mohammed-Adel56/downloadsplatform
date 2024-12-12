@@ -27,10 +27,13 @@ function Header() {
     try {
       const response = await axios.get(
         "https://downloadsplatform.com/api/user/notifications",
-        { withCredentials: true, headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        } }
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
       );
       setNotifications(response.data.notifications);
       setUnreadCount(
