@@ -30,7 +30,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-
+auth.settings.appVerificationDisabledForTesting = true;
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 const microsoftProvider = new OAuthProvider("microsoft.com");
@@ -72,6 +72,7 @@ const Register = () => {
         firstName: user.displayName?.split(" ")[0] || "",
         lastName: user.displayName?.split(" ").slice(1).join(" ") || "",
       });
+      // console.log(response);
 
       // You can access the user's info through result.user
 
@@ -91,7 +92,10 @@ const Register = () => {
       // navigate("/");
     } catch (error) {
       // console.error("Auth error:", error);
+      // console.error("Auth error:", error);
+      toast.error(error.message || "حدث خطأ في تسجيل الدخول");
       setAuthError(error.message);
+      // setAuthError(error.message);
     }
   };
 
@@ -161,11 +165,11 @@ const Register = () => {
               isAdmin: true, // Hardcoded to true for admin registration
             },
             {
-              withCredentials: true ,
+              withCredentials: true,
               headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",
-              }
+              },
             }
           );
           if (response.data.success) {

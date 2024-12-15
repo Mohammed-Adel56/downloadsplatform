@@ -1068,14 +1068,15 @@ class Database:
                 lastName = ' '.join(name.split()[1:]) if name and len(name.split()) > 1 else None
                 
                 cursor.execute("""
-                    INSERT INTO users (email, firstName, lastName, is_verified) 
-                    VALUES (?, ?, ?, ?)
-                """, (email, firstName, lastName, True))
+                    INSERT INTO users (email, first_name, last_name,password, is_verified) 
+                    
+                    VALUES (?, ?,?, ?, ?)
+                """, (email, firstName, lastName,"", True))
                 
                 # Get the inserted user's data
                 user_id = cursor.lastrowid
                 cursor.execute("""
-                    SELECT id, email, firstName, lastName, is_verified 
+                    SELECT id, email, first_name, last_name, is_verified 
                     FROM users WHERE id = ?
                 """, (user_id,))
                 

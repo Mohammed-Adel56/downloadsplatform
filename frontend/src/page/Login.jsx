@@ -50,7 +50,7 @@ const Login = () => {
     try {
       setAuthError(null);
       const result = await signInWithPopup(auth, provider);
-
+      
       const user = result.user;
       // console.log(user);
       const axiosInstance = axios.create({

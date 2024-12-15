@@ -30,6 +30,7 @@ from oauth import init_oauth
 import jwt
 from datetime import datetime,timedelta
 import dateutil.parser  # Add this import at the top
+from fake_useragent import UserAgent  # Add this import
 
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -722,56 +723,88 @@ def get_media_info():
         
 def get_youtube_info(url):
     try:
+        # Configure yt-dlp options
         ydl_opts = {
             'quiet': True,
             'no_warnings': True,
+            'proxy': 'socks5h://127.0.0.1:9050',
+            'socket_timeout': 30,
+            'nocheckcertificate': True,
+            'force_generic_extractor': False,
+            'extract_flat': True,
+            'youtube_include_dash_manifest': False,
+            'format': 'best',
+            'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'referer': 'https://www.youtube.com/',
+            'cookiesfrombrowser': ('chrome',),  # Try to use Chrome cookies
+        }
+
+        # Set up environment variables
+        os.environ['HTTPS_PROXY'] = 'socks5h://127.0.0.1:9050'
+        os.environ['HTTP_PROXY'] = 'socks5h://127.0.0.1:9050'
+        
+        # Create a session for yt-dlp to use
+        import requests
+        session = requests.Session()
+        session.proxies = {
+            'http': 'socks5h://127.0.0.1:9050',
+            'https': 'socks5h://127.0.0.1:9050'
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(url, download=False)
-            
-            # Separate video and audio formats
-            video_formats = []
-            audio_formats = []
-           
-            for f in info['formats']:
-                if f.get('ext') != 'webm':
-                    format_info = {
-                        'format_id': f['format_id'],
-                        'ext': f['ext'],
-                        'filesize': f.get('filesize'),
-                        'format_note': f.get('format_note', ''),
-                        'acodec': 'none',
-                    }
-                    if f.get('acodec') != 'none' and f.get('vcodec') != 'none':
-                        format_info.update({
-                            'resolution': f.get('resolution', 'N/A'),
-                            'fps': f.get('fps', 'N/A'),
-                            'vcodec': f.get('vcodec', 'N/A'),
-                            'abr': f.get('abr', 'N/A'),
-                            'acodec': f.get('acodec', 'N/A'),
-                        })
-                        video_formats.append(format_info)
-                    
-                    if f.get('acodec') != 'none' and f.get("ext")!="mp4":
-                        format_info.update({
-                            'abr': f.get('abr', 'N/A'),
-                            'acodec': f.get('acodec', 'N/A'),
-                        })
-                        audio_formats.append(format_info)
+            try:
+                # First try to get basic info
+                basic_info = ydl.extract_info(url, download=False, process=False)
+                if not basic_info:
+                    raise Exception("Could not extract basic video info")
 
-            return jsonify({
-                'title': info['title'],
-                'thumbnail': info.get('thumbnail'),
-                'duration': info.get('duration'),
-                'uploader': info.get('uploader'),
-                'video_formats': video_formats,
-                'audio_formats': audio_formats
-            })
+                # Then get detailed format info
+                info = ydl.extract_info(url, download=False)
+                
+                video_formats = []
+                audio_formats = []
+                
+                for f in info.get('formats', []):
+                    if f.get('ext') != 'webm':
+                        format_info = {
+                            'format_id': f.get('format_id', ''),
+                            'ext': f.get('ext', ''),
+                            'filesize': f.get('filesize'),
+                            'format_note': f.get('format_note', ''),
+                            'acodec': f.get('acodec', 'none'),
+                        }
+                        
+                        if f.get('acodec') != 'none' and f.get('vcodec') != 'none':
+                            format_info.update({
+                                'resolution': f.get('resolution', 'N/A'),
+                                'fps': f.get('fps', 'N/A'),
+                                'vcodec': f.get('vcodec', 'N/A'),
+                                'abr': f.get('abr', 'N/A'),
+                            })
+                            video_formats.append(format_info)
+                        
+                        elif f.get('acodec') != 'none' and f.get('ext') != 'mp4':
+                            format_info.update({
+                                'abr': f.get('abr', 'N/A'),
+                            })
+                            audio_formats.append(format_info)
+
+                return jsonify({
+                    'title': info.get('title', ''),
+                    'thumbnail': info.get('thumbnail', ''),
+                    'duration': info.get('duration'),
+                    'uploader': info.get('uploader', ''),
+                    'video_formats': video_formats,
+                    'audio_formats': audio_formats
+                })
+
+            except Exception as e:
+                debug_log(f"YouTube extraction error: {str(e)}")
+                return jsonify({'error': f"Could not extract video info: {str(e)}"}), 500
 
     except Exception as e:
         debug_log(f"Error processing request: {str(e)}")
-        return None
+        return jsonify({'error': f"Request processing error: {str(e)}"}), 500
 
 
 
